@@ -1,3 +1,3 @@
-Stato telaio posteriore: 95%
-Stato motore: 88%
-Numero di ali rimanenti: 3
+Stato telaio posteriore: 85%
+Stato motore: 132%
+Numero di ali rimanenti: 4

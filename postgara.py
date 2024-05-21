@@ -5,8 +5,8 @@ from Reparto import Anteriore
 class post_race:
 
 
-   def __init__(self, reparto, log_text):
-       self.reparto = reparto
+   def __init__(self, anteriore, log_text):
+       self.reparto = anteriore
        self.log_text = log_text
 
 
@@ -16,7 +16,7 @@ class post_race:
 
        # Esempio di chiamata ai metodi della classe Reparto
        if aliDisp < 4:
-           risultato = self.reparto.produci_ala()
+           risultato = self.anteriore.produci_anteriore()
            self.log_text.insert(tk.END, risultato + "\n")
 
 
@@ -37,4 +37,3 @@ class post_race:
 
 
        self.log_text.insert(tk.END, "\n--- Fine gestione post-gara ---\n")
-

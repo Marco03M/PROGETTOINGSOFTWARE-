@@ -25,6 +25,9 @@ class GaraGUI:
         self.simula_successiva_btn = tk.Button(master, text="Simula successiva", command=self.simula_successiva)
         self.simula_successiva_btn.pack(side=tk.BOTTOM, fill=tk.X)
 
+        self.accesso_modifiche_btn = tk.Button(master, text="Accesso modifiche macchina",command=self.accesso_modifiche)
+        self.accesso_modifiche_btn.pack(side=tk.BOTTOM, fill=tk.X)
+
         self.reparto = Reparto()
         self.post_gara = post_race(self.reparto, self.log_text)
 
@@ -108,6 +111,9 @@ class GaraGUI:
         except FileNotFoundError:
             messagebox.showerror("Errore", "Il file stato_macchina.txt non esiste.")
 
+    def accesso_modifiche(self):
+        
+        pass
 
 if __name__ == "__main__":
     root = tk.Tk()

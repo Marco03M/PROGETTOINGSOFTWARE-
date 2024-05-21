@@ -17,7 +17,7 @@ def login():
 
         if username == "gara" and password == "gara":
                 import gara
-                gara.GaraGUI
+
                 gara_completata = True
                 print("ciao")
 
