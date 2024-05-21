@@ -19,7 +19,9 @@ class GaraGUI:
         # Inizializza i valori della macchina solo una volta
         self.aliDisp = 4
         self.statoTelaioPosteriore = 100
-        self.statoMotore = 150
+        self.statoMGUH = 150
+        self.statoMHUK = 150
+
 
         self.visualizza_file_btn = tk.Button(master, text="Visualizza stato macchina", command=self.post)
         self.visualizza_file_btn.pack(side=tk.BOTTOM, fill=tk.X)
@@ -39,7 +41,8 @@ class GaraGUI:
         for secondo in range(1, 10):
             numeroTelaioAnteriore = random.randint(1, 100)
             numeroTelaioPosteriore = random.randint(1, 200)
-            numeroMotore = random.randint(1, 5)
+            numeroMGUH = random.randint(1, 5)
+            numeroMGUK =random.randint(1,5)
 
             if numeroTelaioAnteriore <= 10:
                 self.log_text.insert(tk.END, "Il pilota sostituisce l'ala anteriore\n")
@@ -66,16 +69,28 @@ class GaraGUI:
                 self.salva_stato_macchina()
                 return
 
-            self.statoMotore -= numeroMotore
+            self.statoMGUH -= numeroMGUH
+            self.statoMHUK -= numeroMGUK
 
-            if self.statoMotore <= 5:
-                self.log_text.insert(tk.END, "Motore rotto, gara finita\n\n")
-                self.statoMotore = 0
+            if self.statoMHUK <= 5:
+                self.log_text.insert(tk.END, "MGUK rotto, gara finita\n\n")
+                self.statoMGUK = 0
                 self.salva_stato_macchina()
                 return
 
             else:
-                self.log_text.insert(tk.END, f"Il motore è al {self.statoMotore}%\n")
+                self.log_text.insert(tk.END, f"l'MGUK è al {self.statoMHUK}%\n")
+
+
+
+            if self.statoMGUH <= 5:
+                self.log_text.insert(tk.END, "MGUH rotto, gara finita\n\n")
+                self.statoMGUH = 0
+                self.salva_stato_macchina()
+                return
+
+            else:
+                self.log_text.insert(tk.END, f"l'MGUH è al {self.statoMGUH}%\n")
 
             self.log_text.insert(tk.END, f"Il telaio posteriore è al {self.statoTelaioPosteriore}%")
             self.log_text.insert(tk.END, f"\nIl numero di ali rimanenti è {self.aliDisp}\n\n")
@@ -86,7 +101,8 @@ class GaraGUI:
 
         self.log_text.insert(tk.END, "La gara è stata completata senza problemi.\n\n")
         self.log_text.insert(tk.END, f"Stato telaio posteriore: {self.statoTelaioPosteriore}\n")
-        self.log_text.insert(tk.END, f"Stato motore: {self.statoMotore}\n")
+        self.log_text.insert(tk.END, f"Stato MGUH: {self.statoMGUH}\n")
+        self.log_text.insert(tk.END, f"Stato MGUK: {self.statoMGUH}\n")
         self.salva_stato_macchina()
 
 
@@ -135,7 +151,8 @@ class GaraGUI:
         try:
             with open("stato_macchina.txt", "w") as file:
                 file.write(f"Stato telaio posteriore: {self.statoTelaioPosteriore}%\n")
-                file.write(f"Stato motore: {self.statoMotore}%\n")
+                file.write(f"Stato MGUK: {self.statoMHUK}\n")
+                file.write(f"Stato MGUH: {self.statoMGUH}%\n")
                 file.write(f"Numero di ali rimanenti: {self.aliDisp}\n")
             self.log_text.insert(tk.END, "Stato della macchina salvato su stato_macchina.txt\n")
         except Exception as e:

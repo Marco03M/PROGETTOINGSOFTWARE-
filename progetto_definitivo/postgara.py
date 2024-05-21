@@ -10,3 +10,5 @@ def postrace(self):
     except FileNotFoundError:
         messagebox.showerror("Errore", "Il file stato_macchina.txt non esiste.")
 
+    self.log_text.insert(tk.END, "se si vuole procedere con la creazione di nuovi componenti premere accedi reparti\n")
+    self.log_text.insert(tk.END, "altrimenti creare una nuova simulazione\n")
