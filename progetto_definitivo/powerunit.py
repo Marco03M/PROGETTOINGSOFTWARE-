@@ -31,11 +31,43 @@ def pw():
 
     class PowerUnitGUI:
         def __init__(self, master):
+
+            try:
+                with open('MGUH.txt', 'r') as file:
+                    for linea in file:
+                        chiave, valore = linea.strip().split(':')
+                        valore = int(valore)
+                        print(f"{chiave}: {valore}")
+
+
+                        if chiave == 'budgetrimanente':
+                            self.budgetMGUH = valore
+
+            except FileNotFoundError:
+                print(f"Errore: il file  non è stato trovato.")
+
+
+
+            try:
+                with open('MGUK.txt', 'r') as file:
+                    for linea in file:
+                        chiave, valore = linea.strip().split(':')
+                        valore = int(valore)
+                        print(f"{chiave}: {valore}")
+
+                        if chiave == 'budgetrimanente':
+                            self.budgetMGUK = valore
+
+            except FileNotFoundError:
+                print(f"Errore: il file  non è stato trovato.")
+
+
+
             self.master = master
             self.master.title("Gestione PowerUnit")
             self.powerunit=PowerUnit()
-            self.mguh=MGUH(budget_MGUH=20000000)
-            self.mguk=MGUK(budget_MGUK=20000000)
+            self.mguh=MGUH(budget_MGUH=self.budgetMGUH)
+            self.mguk=MGUK(budget_MGUK=self.budgetMGUK)
 
             self.setup_gui()
 
@@ -71,7 +103,7 @@ def pw():
 
                 try:
                     with open("MGUK.txt", "w") as file:
-                            file.write(f"costoMGUK:{costo}%\n")
+                            file.write(f"costoMGUK:{costo}\n")
                             file.write(f"Stato MGUK:{statoMGUK}\n")
                             file.write(f"budgetrimanente:{budget_rimanente}")
 
@@ -93,8 +125,8 @@ def pw():
                 try:
                     with open("MGUH.txt", "w") as file:
                         file.write(f"costoMGUH:{costo}\n")
-                        file.write(f"Stato MGUK:{statoMGUH}\n")
-                        file.write(f"budgetrimanente:{budget_rimanente}")
+                        file.write(f"Stato MGUH:{statoMGUH}\n")
+                        file.write(f"budgetrimanente:{budget_rimanente}\n")
 
                 except Exception as e:
                     self.log_text.insert(tk.END, f"Errore durante il salvataggio del file: {e}\n")

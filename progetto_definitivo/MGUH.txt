@@ -1,3 +1,2 @@
-costoMGUH: 160273
-Stato MGUK: 191
-budgetrimanente: 19839727
+Stato MGUH:143
+budgetrimanente:336007

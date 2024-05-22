@@ -1,6 +1,23 @@
 import tkinter as tk
 from tkinter import messagebox
 
+try:
+    with open('MGUH.txt', 'w') as file:
+        file.write(f"budgetrimanente:500000\n")
+except FileNotFoundError:
+    print(f"Errore: il file  non è stato trovato.")
+
+try:
+    with open('MGUK.txt', 'w') as file:
+        file.write(f"budgetrimanente:500000\n")
+except FileNotFoundError:
+    print(f"Errore: il file  non è stato trovato.")
+
+try:
+    with open('telaio_post.txt', 'w') as file:
+        file.write(f"budgetrimanente:500000")
+except FileNotFoundError:
+    print(f"Errore: il file  non è stato trovato.")
 
 
 from Reparto import Reparto
@@ -13,7 +30,7 @@ def login():
 
     if username == "gara" and password == "gara":
         import gara
-        gara.GaraGUI
+
 
     if username == "powerunit" and password == "powerunit":
         import powerunit

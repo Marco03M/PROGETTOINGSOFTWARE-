@@ -29,12 +29,26 @@ def areo():
 
     class AerodinamicaGUI:
         def __init__(self, master):
+
+            try:
+                with open('telaio_post.txt', 'r') as file:
+                    for linea in file:
+                        chiave, valore = linea.strip().split(':')
+                        valore = int(valore)
+                        print(f"{chiave}: {valore}")
+
+                        if chiave == 'budgetrimanente':
+                            self.budgetPost = valore
+
+            except FileNotFoundError:
+                print(f"Errore: il file  non è stato trovato.")
+
             self.master = master
             self.master.title("Gestione Aerodinamica")
 
             self.aerodinamica = Aerodinamica()
             self.anteriore=Anteriore(budget_Anteriore=5000000)
-            self.posteriore=Posteriore(budget_Posteriore=5000000)
+            self.posteriore=Posteriore(budget_Posteriore=self.budgetPost)
 
             self.setup_gui()
 
@@ -79,9 +93,9 @@ def areo():
 
                 try:
                     with open("telaio_post.txt", "w") as file:
-                            file.write(f"costo telaio posteriore:{costo}%\n")
+                            file.write(f"costo telaio posteriore:{costo}\n")
                             file.write(f"Stato telaio posteriore:100\n")
-                            file.write(f"budgetrimanente:{budget_rimanente}")
+                            file.write(f"budgetrimanente:{budget_rimanente}\n")
 
                 except Exception as e:
                     self.log_text.insert(tk.END, f"Errore durante il salvataggio del file: {e}\n")

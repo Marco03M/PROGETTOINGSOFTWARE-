@@ -19,15 +19,6 @@ class GaraGUI:
         self.log_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
 
-
-
-        # Inizializza i valori della macchina solo una volta
-        self.aliDisp = 4
-        self.statoTelaioPosteriore =100
-        self.statoMGUH = 150
-        self.statoMHUK = 150
-
-
         self.visualizza_file_btn = tk.Button(master, text="Visualizza stato macchina", command=self.post)
         self.visualizza_file_btn.pack(side=tk.BOTTOM, fill=tk.X)
 
@@ -43,6 +34,68 @@ class GaraGUI:
         self.gara_durata()
 
     def gara_durata(self):
+
+        try:
+            with open('MGUH.txt', 'r') as file:
+                for linea in file:
+                    chiave, valore = linea.strip().split(':')
+                    valore = int(valore)
+                    print(f"{chiave}: {valore}")
+
+                    if chiave == 'Stato MGUH':
+                        print(f"Stato MGUH: {valore}")
+                        self.statoMGUH = valore
+
+                    elif chiave == 'budgetrimanente':
+                        self.budgetrimanenteMGUH =valore
+
+        except FileNotFoundError:
+            print(f"Errore: il file  non è stato trovato.")
+
+
+        try:
+            with open('MGUK.txt', 'r') as file:
+                for linea in file:
+                    chiave, valore = linea.strip().split(':')
+                    valore = int(valore)
+                    print(f"{chiave}: {valore}")
+
+                    if chiave == 'Stato MGUK':
+                        print(f"Stato MGUK: {valore}")
+                        self.statoMGUK = valore
+                    elif chiave == 'budgetrimanente':
+
+                        self.budgetrimaneteMGUK = valore
+
+        except FileNotFoundError:
+            print(f"Errore: il file  non è stato trovato.")
+
+
+        try:
+            with open('telaio_post.txt', 'r') as file:
+                for linea in file:
+                    chiave, valore = linea.strip().split(':')
+                    valore = int(valore)
+                    print(f"{chiave}: {valore}")
+
+                    if chiave == 'Stato telaio posteriore':
+                        print(f"stato : {valore}")
+                        self.statoTelaioPosteriore = valore
+
+                    elif chiave == 'budgetrimanente':
+                        self.budgetrimanentePost= valore
+
+        except FileNotFoundError:
+            print(f"Errore: il file  non è stato trovato.")
+
+
+
+        # Inizializza i valori della macchina solo una volta
+        self.aliDisp = 4
+        self.statoTelaioPosteriore
+        self.statoMGUH
+        self.statoMGUK
+
         for secondo in range(1, 10):
             numeroTelaioAnteriore = random.randint(1, 100)
             numeroTelaioPosteriore = random.randint(1, 200)
@@ -75,16 +128,16 @@ class GaraGUI:
                 return
 
             self.statoMGUH -= numeroMGUH
-            self.statoMHUK -= numeroMGUK
+            self.statoMGUK -= numeroMGUK
 
-            if self.statoMHUK <= 5:
+            if self.statoMGUK <= 5:
                 self.log_text.insert(tk.END, "MGUK rotto, gara finita\n\n")
                 self.statoMGUK = 0
                 self.salva_stato_macchina()
                 return
 
             else:
-                self.log_text.insert(tk.END, f"l'MGUK è al {self.statoMHUK}%\n")
+                self.log_text.insert(tk.END, f"l'MGUK è al {self.statoMGUK}%\n")
 
 
 
@@ -107,8 +160,9 @@ class GaraGUI:
         self.log_text.insert(tk.END, "La gara è stata completata senza problemi.\n\n")
         self.log_text.insert(tk.END, f"Stato telaio posteriore: {self.statoTelaioPosteriore}\n")
         self.log_text.insert(tk.END, f"Stato MGUH: {self.statoMGUH}\n")
-        self.log_text.insert(tk.END, f"Stato MGUK: {self.statoMGUH}\n")
+        self.log_text.insert(tk.END, f"Stato MGUK: {self.statoMGUK}\n")
         self.salva_stato_macchina()
+
 
 
     def simula_successiva(self):
@@ -137,10 +191,10 @@ class GaraGUI:
         # Esempio di verifica delle credenziali (da personalizzare)
 
         if username == "areodinamica" and password == "areodinamica":
-            areo(self)
+            areo()
 
         if username == "powerunit" and password == "powerunit":
-            pw(self)
+            pw()
 
 
 
@@ -159,12 +213,42 @@ class GaraGUI:
         try:
             with open("stato_macchina.txt", "w") as file:
                 file.write(f"Stato telaio posteriore: {self.statoTelaioPosteriore}%\n")
-                file.write(f"Stato MGUK: {self.statoMHUK}\n")
+                file.write(f"Stato MGUK: {self.statoMGUK}\n")
                 file.write(f"Stato MGUH: {self.statoMGUH}%\n")
                 file.write(f"Numero di ali rimanenti: {self.aliDisp}\n")
             self.log_text.insert(tk.END, "Stato della macchina salvato su stato_macchina.txt\n")
         except Exception as e:
             self.log_text.insert(tk.END, f"Errore durante il salvataggio del file: {e}\n")
+
+        try:
+            with open('MGUH.txt', 'w') as file:
+                file.write(f"Stato MGUH:{self.statoMGUH}\n")
+                file.write(f"budgetrimanente:{self.budgetrimanenteMGUH}\n")
+
+
+        except FileNotFoundError:
+            print(f"Errore: il file  non è stato trovato.")
+
+
+        try:
+            with open('MGUK.txt', 'w') as file:
+                file.write(f"Stato MGUK:{self.statoMGUK}\n")
+                file.write(f"budgetrimanente:{self.budgetrimaneteMGUK}\n")
+
+        except FileNotFoundError:
+            print(f"Errore: il file  non è stato trovato.")
+
+
+        try:
+            with open('telaio_post.txt', 'w') as file:
+                file.write(f"Stato telaio posteriore:{self.statoTelaioPosteriore}\n")
+                file.write(f"budgetrimanente:{self.budgetrimanentePost}\n")
+
+        except FileNotFoundError:
+            print(f"Errore: il file  non è stato trovato.")
+
+
+
 
 
     def post(self):
