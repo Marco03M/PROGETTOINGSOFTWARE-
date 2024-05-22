@@ -1,4 +1,4 @@
-Stato telaio posteriore: 100%
-Stato MGUK: 87
-Stato MGUH: 92%
-Numero di ali rimanenti: 1
+Stato telaio posteriore: 95%
+Stato MGUK: 115
+Stato MGUH: 124%
+Numero di ali rimanenti: 3

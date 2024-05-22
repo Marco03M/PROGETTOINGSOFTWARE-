@@ -2,8 +2,10 @@ import tkinter as tk
 from tkinter import scrolledtext, messagebox
 
 from Reparto import Reparto
-from Reparto import Anteriore
 from postgara import postrace
+from powerunit import pw
+from Areodinamica import areo
+
 
 import random
 import time
@@ -131,10 +133,13 @@ class GaraGUI:
 
         # Esempio di verifica delle credenziali (da personalizzare)
 
-        if username == "anteriore" and password == "anteriore":
+        if username == "areodinamica" and password == "areodinamica":
+            areo(self)
 
-            Anteriore.create_Anteriore(self)
-            aliDisp += aliDisp
+        if username == "powerunit" and password == "powerunit":
+            pw(self)
+
+
 
 
 
