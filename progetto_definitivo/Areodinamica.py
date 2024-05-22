@@ -1,4 +1,4 @@
-def areo(self):
+def areo():
     import tkinter as tk
     from tkinter import messagebox
     from Reparto import Aerodinamica
@@ -66,6 +66,7 @@ def areo(self):
             success, budget_rimanente = self.anteriore.create_anteriore(costo)
             if success:
                 messagebox.showinfo("Successo", f"Ala Anteriore creata con successo! Costo: ${costo}")
+
             else:
                 messagebox.showerror("Errore", f"Fondi insufficienti per creare l'ala anteriore. Costo: ${costo}")
             self.update_budget_anteriore_label(budget_rimanente)
@@ -75,6 +76,16 @@ def areo(self):
             success, budget_rimanente = self.posteriore.create_posteriore(costo)
             if success:
                 messagebox.showinfo("Successo", f"Telaio Posteriore creato con successo! Costo: ${costo}")
+
+                try:
+                    with open("telaio_post.txt", "w") as file:
+                            file.write(f"costo telaio posteriore:{costo}%\n")
+                            file.write(f"Stato telaio posteriore:100\n")
+                            file.write(f"budgetrimanente:{budget_rimanente}")
+
+                except Exception as e:
+                    self.log_text.insert(tk.END, f"Errore durante il salvataggio del file: {e}\n")
+
             else:
                 messagebox.showerror("Errore", f"Fondi insufficienti per creare il telaio posteriore. Costo: ${costo}")
             self.update_budget_posteriore_label(budget_rimanente)

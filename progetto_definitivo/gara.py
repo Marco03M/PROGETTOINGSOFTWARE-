@@ -18,9 +18,12 @@ class GaraGUI:
         self.log_text = scrolledtext.ScrolledText(master, wrap=tk.WORD, width=50, height=20)
         self.log_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
+
+
+
         # Inizializza i valori della macchina solo una volta
         self.aliDisp = 4
-        self.statoTelaioPosteriore = 100
+        self.statoTelaioPosteriore =100
         self.statoMGUH = 150
         self.statoMHUK = 150
 

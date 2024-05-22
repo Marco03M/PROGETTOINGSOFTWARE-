@@ -1,5 +1,5 @@
 
-def pw(self):
+def pw():
 
     import random
     from Reparto import PowerUnit
@@ -69,6 +69,16 @@ def pw(self):
             if success:
                 messagebox.showinfo("Successo", f"MGUK creata con successo! Costo: ${costo},valore {statoMGUK}")
 
+                try:
+                    with open("MGUK.txt", "w") as file:
+                            file.write(f"costoMGUK:{costo}%\n")
+                            file.write(f"Stato MGUK:{statoMGUK}\n")
+                            file.write(f"budgetrimanente:{budget_rimanente}")
+
+                except Exception as e:
+                    self.log_text.insert(tk.END, f"Errore durante il salvataggio del file: {e}\n")
+
+
             else:
                 messagebox.showerror("Errore", f"Fondi insufficienti per creare l'MGUK. Costo: ${costo}")
             self.update_budget_mguk_label(budget_rimanente)
@@ -79,6 +89,17 @@ def pw(self):
             success, budget_rimanente = self.mguh.create_mguh(costo, statoMGUH)
             if success:
                 messagebox.showinfo("Successo", f"l'MGUH è creato con successo! Costo: ${costo}, valore {statoMGUH}")
+
+                try:
+                    with open("MGUH.txt", "w") as file:
+                        file.write(f"costoMGUH:{costo}\n")
+                        file.write(f"Stato MGUK:{statoMGUH}\n")
+                        file.write(f"budgetrimanente:{budget_rimanente}")
+
+                except Exception as e:
+                    self.log_text.insert(tk.END, f"Errore durante il salvataggio del file: {e}\n")
+
+
             else:
                 messagebox.showerror("Errore", f"Fondi insufficienti per creare l'MGUH. Costo: ${costo}")
             self.update_budget_mguh_label(budget_rimanente)
@@ -88,6 +109,13 @@ def pw(self):
 
         def update_budget_mguh_label(self, budget_rimanente):
             self.budget_mguh_label.config(text=f"${budget_rimanente}")
+
+
+
+
+
+
+
 
 
     root = tk.Tk()
