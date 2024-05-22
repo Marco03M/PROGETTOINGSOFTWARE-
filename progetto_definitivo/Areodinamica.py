@@ -1,10 +1,11 @@
 def areo():
+
+    import random
+    from Reparto import Aerodinamica
     import tkinter as tk
     from tkinter import messagebox
-    from Reparto import Aerodinamica
-    import random
     class Anteriore(Aerodinamica):
-        def __init__(self,budget_Anteriore, dipendenti_Anteriore=50):
+        def __init__(self,budget_Anteriore, dipendenti_Anteriore=50, ):
             super().__init__(dipendenti_Anteriore=dipendenti_Anteriore)
             self.budget_Anteriore = budget_Anteriore
 
@@ -16,7 +17,7 @@ def areo():
                 return False, self.budget_Anteriore
 
     class Posteriore(Aerodinamica):
-        def __init__(self, budget_Posteriore, dipendenti_Posteriore=50 ):
+        def __init__(self, budget_Posteriore, dipendenti_Posteriore=50, ):
             super().__init__(dipendenti_Posteriore=dipendenti_Posteriore)
             self.budget_Posteriore = budget_Posteriore
 
@@ -27,8 +28,27 @@ def areo():
             else:
                 return False, self.budget_Posteriore
 
-    class AerodinamicaGUI:
+    class AreodinamicaGUI:
         def __init__(self, master):
+
+            try:
+                with open('Anteriore.txt', 'r') as file:
+                    for linea in file:
+                        chiave, valore = linea.strip().split(':')
+                        valore = int(valore)
+                        print(f"{chiave}: {valore}")
+
+
+                        if chiave == 'budgetrimanente':
+                            self.budgetanteriore = valore
+
+                        if chiave == 'aliDisp':
+                            self.ali = valore
+
+            except FileNotFoundError:
+                print(f"Errore: il file  non è stato trovato.")
+
+
 
             try:
                 with open('telaio_post.txt', 'r') as file:
@@ -38,48 +58,63 @@ def areo():
                         print(f"{chiave}: {valore}")
 
                         if chiave == 'budgetrimanente':
-                            self.budgetPost = valore
+                            self.budgetposteriore = valore
 
             except FileNotFoundError:
                 print(f"Errore: il file  non è stato trovato.")
 
-            self.master = master
-            self.master.title("Gestione Aerodinamica")
 
-            self.aerodinamica = Aerodinamica()
-            self.anteriore=Anteriore(budget_Anteriore=5000000)
-            self.posteriore=Posteriore(budget_Posteriore=self.budgetPost)
+            self.master = master
+            self.master.title("Gestione PowerUnit")
+            self.areodinamica=Aerodinamica()
+            self.anteriore=Anteriore(budget_Anteriore=self.budgetanteriore)
+            self.posteriore=Posteriore(budget_Posteriore=self.budgetposteriore)
 
             self.setup_gui()
 
         def setup_gui(self):
             tk.Label(self.master, text="Dipendenti Anteriore:").grid(row=0, column=0, padx=10, pady=5)
-            self.dipendenti_anteriore_label = tk.Label(self.master, text=self.aerodinamica.dipendenti_Anteriore)
+            self.dipendenti_anteriore_label = tk.Label(self.master, text=self.anteriore.dipendenti_Anteriore)
             self.dipendenti_anteriore_label.grid(row=0, column=1, padx=10, pady=5)
 
             tk.Label(self.master, text="Dipendenti Posteriore:").grid(row=1, column=0, padx=10, pady=5)
-            self.dipendenti_posteriore_label = tk.Label(self.master, text=self.aerodinamica.dipendenti_Posteriore)
+            self.dipendenti_posteriore_label = tk.Label(self.master, text=self.posteriore.dipendenti_Posteriore)
             self.dipendenti_posteriore_label.grid(row=1, column=1, padx=10, pady=5)
 
             tk.Label(self.master, text="Budget Anteriore:").grid(row=2, column=0, padx=10, pady=5)
-            self.budget_anteriore_label = tk.Label(self.master, text=f"${self.aerodinamica.budget_Anteriore}")
+            self.budget_anteriore_label = tk.Label(self.master, text=f"${self.anteriore.budget_Anteriore}")
             self.budget_anteriore_label.grid(row=2, column=1, padx=10, pady=5)
 
             tk.Label(self.master, text="Budget Posteriore:").grid(row=3, column=0, padx=10, pady=5)
-            self.budget_posteriore_label = tk.Label(self.master, text=f"${self.aerodinamica.budget_Posteriore}")
+            self.budget_posteriore_label = tk.Label(self.master, text=f"${self.posteriore.budget_Posteriore}")
             self.budget_posteriore_label.grid(row=3, column=1, padx=10, pady=5)
 
-            self.anteriore_button = tk.Button(self.master, text="Crea Ala Anteriore", command=self.create_anteriore)
-            self.anteriore_button.grid(row=4, column=0, padx=10, pady=10)
+            self.mguk_button = tk.Button(self.master, text="Crea anteriore", command=self.create_anteriore)
+            self.mguk_button.grid(row=4, column=0, padx=10, pady=10)
 
-            self.posteriore_button = tk.Button(self.master, text="Crea Telaio Posteriore", command=self.create_posteriore)
-            self.posteriore_button.grid(row=4, column=1, padx=10, pady=10)
+            self.mguh_button = tk.Button(self.master, text="Crea posteriore", command=self.create_posteriore)
+            self.mguh_button.grid(row=4, column=1, padx=10, pady=10)
 
         def create_anteriore(self):
-            costo = random.randint(150000, 200000)
+
+            costo = random.randint(15000, 20000)
             success, budget_rimanente = self.anteriore.create_anteriore(costo)
             if success:
-                messagebox.showinfo("Successo", f"Ala Anteriore creata con successo! Costo: ${costo}")
+                self.ali = self.ali +1
+                print(self.ali)
+                messagebox.showinfo("Successo", f"Ala anteriore creata con successo! Costo: ${costo}")
+
+
+
+                try:
+                    with open("Anteriore.txt", "w") as file:
+                            file.write(f"costoanteriore:{costo}\n")
+                            file.write(f"budgetrimanente:{budget_rimanente}\n")
+                            file.write(f"aliDisp:{self.ali}\n")
+
+                except Exception as e:
+                    self.log_text.insert(tk.END, f"Errore durante il salvataggio del file: {e}\n")
+
 
             else:
                 messagebox.showerror("Errore", f"Fondi insufficienti per creare l'ala anteriore. Costo: ${costo}")
@@ -89,16 +124,17 @@ def areo():
             costo = random.randint(150000, 200000)
             success, budget_rimanente = self.posteriore.create_posteriore(costo)
             if success:
-                messagebox.showinfo("Successo", f"Telaio Posteriore creato con successo! Costo: ${costo}")
+                messagebox.showinfo("Successo", f"posteriore è creato con successo! Costo: ${costo}")
 
                 try:
                     with open("telaio_post.txt", "w") as file:
-                            file.write(f"costo telaio posteriore:{costo}\n")
-                            file.write(f"Stato telaio posteriore:100\n")
-                            file.write(f"budgetrimanente:{budget_rimanente}\n")
+                        file.write(f"costoposteriore:{costo}\n")
+                        file.write(f"Stato telaio posteriore:100\n")
+                        file.write(f"budgetrimanente:{budget_rimanente}\n")
 
                 except Exception as e:
                     self.log_text.insert(tk.END, f"Errore durante il salvataggio del file: {e}\n")
+
 
             else:
                 messagebox.showerror("Errore", f"Fondi insufficienti per creare il telaio posteriore. Costo: ${costo}")
@@ -112,5 +148,5 @@ def areo():
 
 
     root = tk.Tk()
-    app = AerodinamicaGUI(master=root)
+    app = AreodinamicaGUI(master=root)
     root.mainloop()

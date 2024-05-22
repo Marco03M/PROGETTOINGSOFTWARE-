@@ -1,1 +1,2 @@
 budgetrimanente:500000
+aliDisp:0

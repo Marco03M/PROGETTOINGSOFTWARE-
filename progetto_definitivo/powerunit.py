@@ -37,8 +37,6 @@ def pw():
                     for linea in file:
                         chiave, valore = linea.strip().split(':')
                         valore = int(valore)
-                        print(f"{chiave}: {valore}")
-
 
                         if chiave == 'budgetrimanente':
                             self.budgetMGUH = valore
@@ -53,14 +51,12 @@ def pw():
                     for linea in file:
                         chiave, valore = linea.strip().split(':')
                         valore = int(valore)
-                        print(f"{chiave}: {valore}")
 
                         if chiave == 'budgetrimanente':
                             self.budgetMGUK = valore
 
             except FileNotFoundError:
                 print(f"Errore: il file  non è stato trovato.")
-
 
 
             self.master = master
@@ -141,11 +137,6 @@ def pw():
 
         def update_budget_mguh_label(self, budget_rimanente):
             self.budget_mguh_label.config(text=f"${budget_rimanente}")
-
-
-
-
-
 
 
 

@@ -1,2 +1,1 @@
-Stato MGUK:148
-budgetrimanente:342835
+budgetrimanente:500000

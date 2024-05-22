@@ -40,10 +40,9 @@ class GaraGUI:
                 for linea in file:
                     chiave, valore = linea.strip().split(':')
                     valore = int(valore)
-                    print(f"{chiave}: {valore}")
+
 
                     if chiave == 'Stato MGUH':
-                        print(f"Stato MGUH: {valore}")
                         self.statoMGUH = valore
 
                     elif chiave == 'budgetrimanente':
@@ -58,13 +57,10 @@ class GaraGUI:
                 for linea in file:
                     chiave, valore = linea.strip().split(':')
                     valore = int(valore)
-                    print(f"{chiave}: {valore}")
 
                     if chiave == 'Stato MGUK':
-                        print(f"Stato MGUK: {valore}")
                         self.statoMGUK = valore
                     elif chiave == 'budgetrimanente':
-
                         self.budgetrimaneteMGUK = valore
 
         except FileNotFoundError:
@@ -76,10 +72,8 @@ class GaraGUI:
                 for linea in file:
                     chiave, valore = linea.strip().split(':')
                     valore = int(valore)
-                    print(f"{chiave}: {valore}")
 
                     if chiave == 'Stato telaio posteriore':
-                        print(f"stato : {valore}")
                         self.statoTelaioPosteriore = valore
 
                     elif chiave == 'budgetrimanente':
@@ -88,10 +82,24 @@ class GaraGUI:
         except FileNotFoundError:
             print(f"Errore: il file  non è stato trovato.")
 
+        try:
+            with open('Anteriore.txt', 'r') as file:
+                for linea in file:
+                    chiave, valore = linea.strip().split(':')
+                    valore = int(valore)
+
+                    if chiave == 'aliDisp':
+                        self.aliDisp = valore
+
+                    elif chiave == 'budgetrimanente':
+                        self.budgetrimanenteAli= valore
+
+        except FileNotFoundError:
+            print(f"Errore: il file  non è stato trovato.")
 
 
         # Inizializza i valori della macchina solo una volta
-        self.aliDisp = 4
+        self.aliDisp
         self.statoTelaioPosteriore
         self.statoMGUH
         self.statoMGUK
@@ -106,6 +114,7 @@ class GaraGUI:
                 self.log_text.insert(tk.END, "Il pilota sostituisce l'ala anteriore\n")
                 self.aliDisp -= 1
                 self.log_text.insert(tk.END, f"Il numero di ali nuove rimaste è {self.aliDisp}\n\n")
+                self.salva_stato_macchina()
 
             if self.aliDisp == 0:
                 self.log_text.insert(tk.END, "Hai finito i ricambi!! Gara terminata\n\n")
@@ -196,16 +205,6 @@ class GaraGUI:
         if username == "powerunit" and password == "powerunit":
             pw()
 
-
-
-
-
-
-
-        elif username == "posteriore" and password == "posteriore":
-         print ("dd")
-
-
         else:
             messagebox.showerror("Errore", "Nome utente o password non corretti")
 
@@ -243,6 +242,15 @@ class GaraGUI:
             with open('telaio_post.txt', 'w') as file:
                 file.write(f"Stato telaio posteriore:{self.statoTelaioPosteriore}\n")
                 file.write(f"budgetrimanente:{self.budgetrimanentePost}\n")
+
+        except FileNotFoundError:
+            print(f"Errore: il file  non è stato trovato.")
+
+        try:
+            with open('Anteriore.txt', 'w') as file:
+                file.write(f"aliDisp:{self.aliDisp}\n")
+                file.write(f"budgetrimanente:{self.budgetrimanenteAli}\n")
+
 
         except FileNotFoundError:
             print(f"Errore: il file  non è stato trovato.")
