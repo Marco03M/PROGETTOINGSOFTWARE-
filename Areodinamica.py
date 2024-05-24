@@ -1,3 +1,4 @@
+import datetime
 import random
 from Reparto import Aerodinamica
 import tkinter as tk
@@ -112,7 +113,17 @@ class AreodinamicaGUI:
                 except Exception as e:
                     self.log_text.insert(tk.END, f"Errore durante il salvataggio del file: {e}\n")
 
+                try:
+                        with open("storico.txt", "a) as file:
+                        file.write(f"data ala anteriore prodotta:{formatted_date_time}\n")
+                        file.write(f"costoanteriore:{costo}\n")
+                        file.write(f"budget rimanente ali anteriori:{budget_rimanente}\n")
+                        file.write(f"numero ali rimanenti:{self.aliDisp}\n\n\n")
 
+
+                except Exception as e:
+                    self.log_text.insert(tk.END, f"Errore durante il salvataggio del file: {e}\n")
+                
             else:
                 messagebox.showerror("Errore", f"Fondi insufficienti per creare l'ala anteriore. Costo: ${costo}")
             self.update_budget_anteriore_label(budget_rimanente)
@@ -132,7 +143,17 @@ class AreodinamicaGUI:
                 except Exception as e:
                     self.log_text.insert(tk.END, f"Errore durante il salvataggio del file: {e}\n")
 
+                try:
+                    with open("storico.txt", "a") as file:
+                        file.write(f"data telaio posteriore prodotto:{formatted_date_time}\n")
+                        file.write(f"costoposteriore:{costo}\n")
+                        file.write(f"Stato telaio posteriore 100\n")
+                        file.write(f"budget rimanente telaio posteriore:{budget_rimanente}\n\n\n")
 
+
+                except Exception as e:
+                    self.log_text.insert(tk.END, f"Errore durante il salvataggio del file: {e}\n")
+                
             else:
                 messagebox.showerror("Errore", f"Fondi insufficienti per creare il telaio posteriore. Costo: ${costo}")
             self.update_budget_posteriore_label(budget_rimanente)
