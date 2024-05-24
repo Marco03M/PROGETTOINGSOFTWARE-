@@ -1,39 +1,14 @@
 import tkinter as tk
-from Reparto import Anteriore
+from tkinter import messagebox
+def postrace(self):
+    try:
+        with open("stato_macchina.txt", "r") as file:
+            contenuto = file.read()
+            self.log_text.delete(1.0, tk.END)
+            self.log_text.insert(tk.END, "\n--- Stato della Macchina ---\n")
+            self.log_text.insert(tk.END, contenuto + "\n")
+    except FileNotFoundError:
+        messagebox.showerror("Errore", "Il file stato_macchina.txt non esiste.")
 
-
-class post_race:
-
-
-   def __init__(self, anteriore, log_text):
-       self.reparto = anteriore
-       self.log_text = log_text
-
-
-   def gestisci_post_gara(self, statoTelaioPosteriore, statoMotore, aliDisp):
-       self.log_text.insert(tk.END, "\n--- Gestione post-gara ---\n")
-
-
-       # Esempio di chiamata ai metodi della classe Reparto
-       if aliDisp < 4:
-           risultato = self.anteriore.produci_anteriore()
-           self.log_text.insert(tk.END, risultato + "\n")
-
-
-       if statoMotore < 50:
-           risultato = self.reparto.produci_motore()
-           self.log_text.insert(tk.END, risultato + "\n")
-
-
-       # Sostituzione dei componenti danneggiati
-       if aliDisp < 4:
-           risultato = self.reparto.sostituisci_ala()
-           self.log_text.insert(tk.END, risultato + "\n")
-
-
-       if statoMotore < 50:
-           risultato = self.reparto.sostituisci_motore()
-           self.log_text.insert(tk.END, risultato + "\n")
-
-
-       self.log_text.insert(tk.END, "\n--- Fine gestione post-gara ---\n")
+    self.log_text.insert(tk.END, "se si vuole procedere con la creazione di nuovi componenti premere accedi reparti\n")
+    self.log_text.insert(tk.END, "altrimenti creare una nuova simulazione\n")
