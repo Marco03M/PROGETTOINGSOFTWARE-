@@ -1,0 +1,24 @@
+data telaio posteriore prodotto:2024-05-24 10:39:38
+costoposteriore:179274
+Stato telaio posteriore 100
+budget rimanente telaio posteriore:320726
+
+
+data ala anteriore prodotta:2024-05-24 10:39:40
+costoanteriore:19167
+budget rimanente ali anteriori:480833
+numero ali rimanenti:1
+
+
+ data produzione MGUK:2024-05-24 10:39:51
+costoMGUK:159119
+valore MGUK:154
+budget rimasto MGUK: 340881
+
+
+data produzione MGUK:2024-05-24 10:39:53
+costoMGUK:170959
+valore MGUK:109
+budget rimasto MGUK: 329041
+
+

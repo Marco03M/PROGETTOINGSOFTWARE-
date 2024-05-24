@@ -1,0 +1,3 @@
+costo:170959
+stato:109
+budgetrimanente:329041
