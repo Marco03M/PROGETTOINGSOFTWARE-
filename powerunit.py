@@ -1,3 +1,4 @@
+import datetime
 import random
 from Reparto import PowerUnit
 import tkinter as tk
@@ -83,6 +84,20 @@ class PowerUnitGUI:
         if success:
             messagebox.showinfo("Successo", f"MGUK creata con successo! Costo: ${costo}, valore {statoMGUK}")
             self.save_to_file("MGUK.txt", costo, statoMGUK, budget_rimanente)
+            
+            now =datetime.datetime.now()
+            formatted_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
+
+            try:
+                with open("storico.txt", "a") as file:
+                    file.write(f"data produzione MGUK:{formatted_date_time}\n")
+                    file.write(f"costoMGUK:{costo}\n")
+                    file.write(f"valore MGUK:{statoMGUK}\n")
+                    file.write(f"budget rimasto MGUK: {budget_rimanente}\n\n\n")
+            except Exception as e:
+                    self.log_text.insert(tk.END, f"errore :{e}")
+
+                
         else:
             messagebox.showerror("Errore", f"Fondi insufficienti per creare l'MGUK. Costo: ${costo}")
         self.update_budget_mguk_label(budget_rimanente)
@@ -94,6 +109,19 @@ class PowerUnitGUI:
         if success:
             messagebox.showinfo("Successo", f"l'MGUH è creato con successo! Costo: ${costo}, valore {statoMGUH}")
             self.save_to_file("MGUH.txt", costo, statoMGUH, budget_rimanente)
+
+            now = datetime.datetime.now()
+            formatted_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
+
+            try:
+                with open("storico.txt", "a") as file:
+                    file.write(f" data produzione MGUK:{formatted_date_time}\n")
+                    file.write(f"costoMGUK:{costo}\n")
+                    file.write(f"valore MGUK:{statoMGUH}\n")
+                    file.write(f"budget rimasto MGUK: {budget_rimanente}\n\n\n")
+            except Exception as e:
+                    self.log_text.insert(tk.END, f"errore :{e}")
+        
         else:
             messagebox.showerror("Errore", f"Fondi insufficienti per creare l'MGUH. Costo: ${costo}")
         self.update_budget_mguh_label(budget_rimanente)
