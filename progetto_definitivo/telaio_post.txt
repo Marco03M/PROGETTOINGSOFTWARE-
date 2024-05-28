@@ -1,0 +1,3 @@
+costoposteriore:2647750
+Stato telaio posteriore:100
+budgetrimanente:27352250
